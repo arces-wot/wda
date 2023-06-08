@@ -55,12 +55,19 @@ function queryIrrigationRequests(field) {
 	 });
 }
 
-function queryHistory(observation,from,to) {
+function queryHistory(observation,from,to,full) {
 	// Forced bindings
 // let query = query.replace("?observation", "<"+observation+">");
 // let query = query.replace("?from", "'" + from + "'^^xsd:dateTime");
 // let query = query.replace("?to", "'" + to + "'^^xsd:dateTime");
 //	 
+
+	if (full) {
+		id = "LOG_QUANTITY_FULL"
+	}
+	else {
+		id = "LOG_QUANTITY"
+	}
 	let query = bench.sparql(jsap["queries"]["LOG_QUANTITY"]["sparql"],{
 		observation :{
 		   type: "uri",
@@ -76,6 +83,9 @@ function queryHistory(observation,from,to) {
 		}
 		
 	})
+	
+	console.log(prefixes);
+	console.log(query);
 	
 	return sepa.query(prefixes + " " + query,jsap).then((data)=>{ 
 		 return data;

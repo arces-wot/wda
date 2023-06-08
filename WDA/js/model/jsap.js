@@ -15,7 +15,7 @@ function initSepa() {
 }
 
 jsap = {
-		"host": "mml.arces.unibo.it",
+		"host": "dld.arces.unibo.it",
 		"oauth": {
 			"enable": false,
 			"register": "https://localhost:8443/oauth/register",
@@ -23,7 +23,7 @@ jsap = {
 		},
 		"sparql11protocol": {
 			"protocol": "http",
-			"port": 8666,
+			"port": 8150,
 			"query": {
 				"path": "/query",
 				"method": "POST",
@@ -39,7 +39,7 @@ jsap = {
 			"protocol": "ws",
 			"availableProtocols": {
 				"ws": {
-					"port": 9666,
+					"port": 9150,
 					"path": "/subscribe"
 				},
 				"wss": {
@@ -258,6 +258,25 @@ jsap = {
 				}
 			},
 			"LOG_QUANTITY": {
+				"sparql": "SELECT * WHERE {GRAPH ?observation {?result qudt:numericValue ?value; time:inXSDDateTimeStamp ?timestamp} FILTER (xsd:dateTime(?timestamp) > xsd:dateTime(?from) && xsd:dateTime(?timestamp) < xsd:dateTime(?to))} ORDER BY xsd:dateTime(?timestamp)",
+				"forcedBindings": {
+					"from": {
+						"datatype": "xsd:dateTime",
+						"type": "literal",
+						"value": "2019-07-15T00:00:00Z"
+					},
+					"to": {
+						"datatype": "xsd:dateTime",
+						"type": "literal",
+						"value": "2019-07-15T23:59:59Z"
+					},
+					"observation": {
+						"type": "uri",
+						"value": "arces-monitor:SanMicheleLevelsL1"
+					}
+				}
+			},
+			"LOG_QUANTITY_SLOW": {
 				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/observation/history> {?result sosa:isResultOf ?observation ; qudt:numericValue ?value; time:inXSDDateTimeStamp ?timestamp} FILTER (xsd:dateTime(?timestamp) > xsd:dateTime(?from) && xsd:dateTime(?timestamp) < xsd:dateTime(?to))} ORDER BY xsd:dateTime(?timestamp)",
 				"forcedBindings": {
 					"from": {

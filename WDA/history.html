@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="icon/swamp.png">
-<title>SWAMP</title>
+<title>SWAMP Water Distribution Application</title>
 <meta name="viewport" content="width=device-width">
 
 <link rel="stylesheet"
@@ -59,7 +59,7 @@
 </style>
 </head>
 
-<body onload='onLoad()'>
+<body onload='onLoad(false)'>
 	<nav class="navbar">
 		<a class="navbar-brand" href="#"> <img src="icon/swamp.png"
 			width="28" class="d-inline-block align-top" alt=""> SWAMP - Smart Water Management Platform
@@ -108,13 +108,13 @@
 						</div>
 						
 						<div class="col-auto">
-							<button type="button" onclick="javascript:onRefresh();"
+							<button type="button" onclick="javascript:onRefresh(false);"
 								id="refresh" class="btn btn-primary">
 								<i class="fas fa-search"></i>&nbsp;OK
 							</button>
 						</div>
 						<div class="col-auto">
-							<button type="button" id="last24h" class="btn btn-primary" onclick="javascript:onRefresh24h();">
+							<button type="button" id="last24h" class="btn btn-primary" onclick="javascript:onRefresh24h(false);">
 								<i class="fas fa-sync-alt"></i>&nbsp;24h
 							</button>
 						</div>
