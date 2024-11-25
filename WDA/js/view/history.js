@@ -72,7 +72,7 @@ function getCalendarDates() {
 	return calendar;
 }
 
-function onLoad() {
+function onLoadHistory() {
 	// Init SEPA
 	initSepa();
 	

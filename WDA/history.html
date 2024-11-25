@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="icon/swamp.png">
+<link rel="icon" href="icon/logo.png">
 <title>DLD Lake</title>
 <meta name="viewport" content="width=device-width">
 
@@ -34,6 +34,7 @@
 <script src="lib/moment-timezone-with-data.js"></script>
 <script src="lib/tz.js"></script>
 
+<!--BEGIN REPLACE WITH DEPLOY VERSION-->
 <script src="js/view/history.js"></script>
 
 <script src="js/model/jsap.js"></script>
@@ -42,6 +43,7 @@
 <script src="js/control/control.js"></script>
 <script src="js/control/csv.js"></script>
 <script src="js/control/utils.js"></script>
+<!--END REPLACE WITH DEPLOY VERSION-->
 
 <style>
 .tree::-webkit-scrollbar {
@@ -59,7 +61,7 @@
 </style>
 </head>
 
-<body onload='onLoad(false)'>
+<body onload='onLoadHistory(false)'>
 	<nav class="navbar">
 		<a class="navbar-brand" style="color: #1D3D62" href="#"> <img src="icon/logo.png"
 			width="28" class="d-inline-block align-center mr-3" alt=""><strong>Timeserie</strong>

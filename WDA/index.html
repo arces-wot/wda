@@ -31,27 +31,30 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/@arces-wot/sepa-js@0.10.7/web/sepa.js"></script>
 
+<script src="lib/color-scheme.js"></script>
+<script src="lib/tz.js"></script>
 <script src="lib/moment.js"></script>
 <script src="lib/moment-timezone-with-data.js"></script>
 <script src="lib/odometer.js"></script>
 <script src="lib/tz.js"></script>
 
+<!--BEGIN REPLACE WITH DEPLOY VERSION-->
+<script src="js/model/queries.js"></script>
+<script src="js/model/subscriptions.js"></script>
+<script src="js/model/jsap.js"></script>
+<script src="js/model/canals.js"></script>
+<script src="js/model/fields.js"></script>
+
+<script src="js/control/csv.js"></script>
+<script src="js/control/utils.js"></script>
+<script src="js/control/control.js"></script>
 
 <script src="js/view/tree.js"></script>
 <script src="js/view/counters.js"></script>
 <script src="js/view/forecast.js"></script>
-<script src="js/view/livedata.js"></script>
 <script src="js/view/map.js"></script>
-
-<script src="js/model/jsap.js"></script>
-<script src="js/model/queries.js"></script>
-<script src="js/model/subscriptions.js"></script>
-<script src="js/model/canals.js"></script>
-<script src="js/model/fields.js"></script>
-
-<script src="js/control/control.js"></script>
-<script src="js/control/csv.js"></script>
-<script src="js/control/utils.js"></script>
+<script src="js/view/livedata.js"></script>
+<!--END REPLACE WITH DEPLOY VERSION-->
 
 <link rel="stylesheet"
 	href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
