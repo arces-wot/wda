@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="icon/swamp.png">
+<link rel="icon" href="icon/logo.png">
 <meta charset="utf-8">
-<title>SWAMP - Water Distribution Application</title>
+<title>DLD Lake</title>
 
 <link rel="stylesheet"
 	href="fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css">
@@ -73,33 +73,46 @@
 </head>
 
 <body onLoad='onLoad()'>
-	<nav class="navbar">
-		<a class="navbar-brand" href="#"> <img src="icon/swamp.png"
-			width=28 class="d-inline-block align-top" alt=""> SWAMP - Smart
-			Water Management Platform
+	<nav class="navbar" style="background-color: #eeeeee;">
+		<a class="navbar-brand" href="#" style="color: #1D3D62"> <img src="icon/logo.png"
+																	  width=28 class="d-inline-block align-text-center mr-3" alt=""><strong>DYNAMIC LINKED DATA LAKE</strong>
 		</a>
 
-		<form class="form-inline">
-			<button type="button" class="btn btn-sm btn-secondary">
-				Notifications<span class="badge badge-light ml-3"><div
-						id="odoNotifications" class="odometer"></div></span>
-			</button>
-		</form>
 
+	<form class="form-inline">
+		<button type="button" class="btn btn-sm btn-primary mr-3">
+			Notifications<span class="badge badge-light ml-3"><div
+				id="odoNotifications" class="odometer"></div></span>
+		</button>
+		<div class="badge badge-primary">Jump to
+			&nbsp;&nbsp;<select id="selectContext"
+								onchange="onChangeContext()">
+				<option value="swamp">SWAMP</option>
+				<option value="cadriano">DISTAL</option>
+				<option value="arces">ARCES</option>
+				<option value="cesena">Cesena</option>
+			</select>
+		</div>
 
+	</form>
 	</nav>
 
-	<div class="container-fluid">
+	<div class="container-fluid mt-3">
 		<div class="row">
 			<div class='col ml-3 mr-3'>
 				<div class='row' id="mapid"></div>
-				<div class='row mt-3 flex-row-reverse'>
+				<!--<div class='row mt-3 flex-row-reverse'>
 					<span class="badge mb-1 badge-success align-self-center">Filter
 						by crop&nbsp;&nbsp;<select id="filterByCrop"
 						onchange="onFilterByCropChange()">
+							<option value="---">---</option>
 							<option value="ALL">ALL</option>
 					</select>
 					</span>
+					<button type="button" class="btn btn-sm btn-success mr-3">
+						Irrigation requests<span class="badge badge-light ml-3"><div
+							id=odoIrrigationRequests class="odometer"></div></span>
+					</button>
 					<button type="button" class="btn btn-sm btn-success mr-3">
 						Fields<span class="badge badge-light ml-3"><div
 								id="odoFields" class="odometer"></div></span>
@@ -110,7 +123,7 @@
 								id="odoCrops" class="odometer"></div></span>
 					</button>
 
-				</div>
+				</div>-->
 			</div>
 			<div class='col-auto'>
 				<div class="card">
@@ -141,22 +154,16 @@
 					<div class="card-header">Semantic content</div>
 					<div class="card-body">
 						<div class='row mb-2'>
-							<button type="button" class="btn btn-sm btn-primary">
+							<a href="https://www.w3.org/TR/vocab-ssn/#Observations" target="_blank" type="button" class="btn btn-sm btn-primary">
 								Observations<span class="badge badge-light ml-3"><div
 										id="odoObservations" class="odometer"></div></span>
-							</button>
+							</a>
 						</div>
 						<div class='row mb-2'>
-							<button type="button" class="btn btn-sm btn-primary">
+							<a target="_blank" type="button" class="btn btn-sm btn-primary" href="https://www.w3.org/TR/vocab-ssn/#Features-of-Interest-and-Properties">
 								Features of interest<span class="badge badge-light ml-3"><div
 										id="odoPlaces" class="odometer"></div></span>
-							</button>
-						</div>
-						<div class='row'>
-							<button type="button" class="btn btn-sm btn-primary mr-3">
-								Irrigation requests<span class="badge badge-light ml-3"><div
-										id=odoIrrigationRequests class="odometer"></div></span>
-							</button>
+							</a>
 						</div>
 					</div>
 				</div>

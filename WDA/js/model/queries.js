@@ -1,4 +1,4 @@
-function queryFields() { 
+function queryFields() {
 	return sepa.query(prefixes + " "
 			+ jsap["queries"]["FIELD"]["sparql"],jsap).then((data)=>{  				
 				return data;

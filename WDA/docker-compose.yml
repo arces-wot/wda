@@ -1,0 +1,148 @@
+version: '3'
+#--------------------------------------------------------------------------------------------#
+# NAME: SWAMP APP STACK
+# DATE: 24/07/2024
+# DESCRIPTION: Deploys ALL SWAMP APP MODULES
+# NOTES: contains db,engine,agents,mappers,logger and WDA
+# SWARM enabled (24.07.2024)
+# JMX enabled (24.07.2024)
+#--------------------------------------------------------------------------------------------#
+services:
+  #==================
+  # 1- SEPAENGINE: CORE
+  #==================
+  engine:
+    image: vaimeedock/sepa:v0.15.11
+    container_name: sepa_engine
+    environment:
+      - host=dld.arces.unibo.it
+      - sparql11protocol_port=8890
+      - sparql11protocol_protocol=http
+      - sparql11protocol_query_path=/sparql
+      - sparql11protocol_query_method=POST
+      - sparql11protocol_query_format=JSON
+      - sparql11protocol_update_path=/sparql
+      - sparql11protocol_update_method=POST
+      - sparql11protocol_update_format=JSON
+      - JMX_HOSTNAME=dld.arces.unibo.it
+      - JMX_PORT=7091
+      - LOG_LEVEL=error
+    restart: always
+    networks:
+      - default
+    ports:
+      - "8150:8000"
+      - "9150:9000"
+      - "7091:7091"
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+    #==================
+  # 2- MQTTIOT AGENT
+  #==================
+  agent:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: mqtt_agent
+    environment:
+      - app=https://tools.vaimee.com/mqtt_agent
+
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  logger:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: observation_logger
+    environment:
+      - app=https://tools.vaimee.com/log_observations
+      - livegraph=http://wot.arces.unibo.it/observation
+      - target=multiplegraphs
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  mapper-default:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: mapper_default
+    environment:
+      - app=http://wot.arces.unibo.it/mqtt#DefaultMapper
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  mapper-apple:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: mapper_apple
+    environment:
+      - app=http://wot.arces.unibo.it/mqtt#AppleMapper
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  mapper-swamp:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: mapper_swamp
+    environment:
+      - app=http://wot.arces.unibo.it/mqtt#SwampMapper
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  email-sender:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: email_sender
+    environment:
+      - app=https://tools.vaimee.com/email
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  wda-monitor:
+    image: vaimeedock/vaimeetools:0.11.24072024
+    container_name: wda_monitor
+    environment:
+      - app=https://tools.vaimee.com/monitoring/events
+      - window_size=60
+      - sampling=60
+      - update_to=luca.roffia@vaimee.it,tullio.salmoncinotti@unibo.it
+    restart: always
+    networks:
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld
+  #==================
+  # 3 - WDA
+  #==================
+  wda:
+    image: vaimeedock/wda:0.4.03092023
+    container_name: sepa_view
+    restart: always
+    networks:
+      - default
+    ports:
+      - "8103:80"
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == dld

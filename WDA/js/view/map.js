@@ -9,6 +9,11 @@ var initPos = {
 		"lng": 10.717520,
 		"zoom": 12
 	},
+	"cesena": {
+    		"lat": 44.14808,
+    		"lng": 12.23516,
+    		"zoom": 12
+    },
 	"default": {
 		"lat": 44.50265,
 		"lng": 11.3701,
@@ -18,7 +23,18 @@ var initPos = {
 		"lat": 44.4948,
 		"lng": 11.3425,
 		"zoom": 15
-	}
+	},
+	"cadriano": {
+    	"lat": 44.547944,
+    	"lng": 11.41425,
+    	"zoom": 15
+    }
+}
+
+function moveTo(context) {
+    if (initPos[context] != undefined) {
+        map.flyTo([initPos[context]["lat"], initPos[context]["lng"]], initPos[context]["zoom"]);
+    }
 }
 
 function initMap(context) {
@@ -73,7 +89,7 @@ function initMap(context) {
 	initFields().then((fields) => {
 		mapFields = fields;
 		geoJson = undefined;
-		showFields("ALL");
+		showFields("---");
 	});
 
 	// Requests
@@ -285,10 +301,10 @@ function add_marker(lat, lng, name, id) {
 	if (placeIds[id] === undefined) placeIds[id] = generateID();
 
 	if (icons[id] != undefined) {
-		var marker = L.marker([lat, lng], { "title": name, "icon": icons[id] }).addTo(map);
+		var marker = L.marker([lat, lng], { "title": name + ' URI:'+id, "icon": icons[id] }).addTo(map);
 	}
 	else {
-		var marker = L.marker([lat, lng], { "title": name, }).addTo(map);
+		var marker = L.marker([lat, lng], { "title": name + ' URI:'+id, }).addTo(map);
 	}
 
 	markers[id] = {};

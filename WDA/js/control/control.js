@@ -47,3 +47,8 @@ function onFilterByCropChange() {
 	crop = document.getElementById("filterByCrop").value;
 	showFields(crop);
 }
+
+function onChangeContext() {
+    context = document.getElementById("selectContext").value;
+    moveTo(context);
+}

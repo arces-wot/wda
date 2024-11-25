@@ -98,7 +98,7 @@ function addObservation(observation, place) {
 	+ "</p></div>"
 	
 	+ "<div class='col-auto'>" 
-	+ "<button type='button' class='btn btn-success' id='value_+"+ obs_id+ "'>"
+	+ "<button type='button' class='btn btn-success' id='value_+"+ obs_id+ "' title='"+observation+"'>"
 	+ "<span class='badge badge-light' id='value_"+ obs_id+ "'>---</span>&nbsp;"
 	+ sensorData[place][observation]["symbol"]
 	+ "<span class='badge badge-light ml-3' id='timestamp_"+ obs_id + "'>---</span>"

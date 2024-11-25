@@ -15,15 +15,10 @@ function initSepa() {
 }
 
 jsap = {
-		"host": "dld.arces.unibo.it",
-		"oauth": {
-			"enable": false,
-			"register": "https://localhost:8443/oauth/register",
-			"tokenRequest": "https://localhost:8443/oauth/token"
-		},
+		"host": "sepa.wda.vaimee.com",
 		"sparql11protocol": {
-			"protocol": "http",
-			"port": 8150,
+			"protocol": "https",
+			"port": 443,
 			"query": {
 				"path": "/query",
 				"method": "POST",
@@ -36,15 +31,15 @@ jsap = {
 			}
 		},
 		"sparql11seprotocol": {
-			"protocol": "ws",
+			"protocol": "wss",
 			"availableProtocols": {
 				"ws": {
 					"port": 9150,
 					"path": "/subscribe"
 				},
 				"wss": {
-					"port": 9443,
-					"path": "/secure/subscribe"
+					"port": 443,
+					"path": "/subscribe"
 				}
 			}
 		},
@@ -386,7 +381,7 @@ jsap = {
 				"sparql": "SELECT (COUNT(?forecast) AS ?count) WHERE {GRAPH <http://wot.arces.unibo.it/forecast> {?forecast rdf:type swamp:Forecast}}"
 			},
 			"IRRIGATION_REQUESTS_BY_FIELD": {
-				"sparql": "SELECT ?reservationNumber ?scheduled ?satisfied FROM <http://swamp-project.org/cbec/irrigation/2021> WHERE {?irr rdf:type swamp2:IrrigationRequest ; swamp2:hasField ?fieldUri ; swamp2:reservationNumber ?reservationNumber ; swamp2:hasStatus ?status . ?status swamp2:requestStatus swamp2:Scheduled ; time:inXSDDateTimeStamp ?scheduled . OPTIONAL{?irr swamp2:hasStatus ?statusSatisfied . ?statusSatisfied swamp2:requestStatus swamp2:Satisfied ; time:inXSDDateTimeStamp ?satisfied}} ORDER BY xsd:decimal(?reservationNumber)",
+				"sparql": "SELECT DISTINCT ?reservationNumber ?scheduled ?satisfied FROM <http://swamp-project.org/cbec/irrigation/2021> WHERE {?irr rdf:type swamp2:IrrigationRequest ; swamp2:hasField ?fieldUri ; swamp2:reservationNumber ?reservationNumber ; swamp2:hasStatus ?status . ?status swamp2:requestStatus swamp2:Scheduled ; time:inXSDDateTimeStamp ?scheduled . OPTIONAL{?irr swamp2:hasStatus ?statusSatisfied . ?statusSatisfied swamp2:requestStatus swamp2:Satisfied ; time:inXSDDateTimeStamp ?satisfied}} ORDER BY xsd:decimal(?reservationNumber)",
 				"forcedBindings": {
 					"fieldUri": {
 						"type": "uri",
