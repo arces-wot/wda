@@ -1,18 +1,15 @@
 # Build command on Apple M1: docker buildx build --platform linux/amd64 --push -t vaimeedock/wda.vaimee.com:latest .
 FROM nginx
+
 COPY / /usr/share/nginx/html
 
-#COPY index-deploy.html /usr/share/nginx/html/index.html
-#COPY history-deploy.html /usr/share/nginx/html/history.html
-#COPY compare-deploy.html /usr/share/nginx/html/compare.html
+#RUN apk update && apk upgrade && apk add bash
 
-RUN chmod +x /usr/share/nginx/html/deploy.sh
-RUN /usr/share/nginx/html/deploy.sh /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
 
-RUN cp index-deploy.html /usr/share/nginx/html/index.html
-RUN cp history-deploy.html /usr/share/nginx/html/history.html
-RUN cp compare-deploy.html /usr/share/nginx/html/compare.html
+RUN chmod +x deploy.sh
+RUN ./deploy.sh /usr/share/nginx/html
 
-RUN rm /usr/share/nginx/html/compare-deploy.html
-RUN rm /usr/share/nginx/html/index-deploy.html
-RUN rm /usr/share/nginx/html/history-deploy.html
+RUN mv index-deploy.html index.html
+RUN mv history-deploy.html history.html
+RUN mv compare-deploy.html compare.html
