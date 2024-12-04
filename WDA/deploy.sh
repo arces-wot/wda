@@ -1,15 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
-cd $1
+cd $1 || exit
 
 mkdir -p deploy/js/control
 mkdir -p deploy/js/model
 mkdir -p deploy/js/view
 
 #Rename JS file with MD5 hash
-find js/control -type f -exec bash -c 'cp $1 "deploy/${1%.*}.$(md5 -q $1).${1##*.}"' bash {} \;
-find js/model/ -type f -exec bash -c 'cp $1 "deploy/${1%.*}.$(md5 -q $1).${1##*.}"' bash {} \;
-find js/view/ -type f -exec bash -c 'cp $1 "deploy/${1%.*}.$(md5 -q $1).${1##*.}"' bash {} \;
+find js/control -type f -exec bash -c 'cp $1 deploy/${1%.*}.$(sha1sum $1 | cut -d " " -f 1).${1##*.}' bash {} \;
+find js/model -type f -exec bash -c 'cp $1 deploy/${1%.*}.$(sha1sum $1 | cut -d " " -f 1).${1##*.}' bash {} \;
+find js/view -type f -exec bash -c 'cp $1 deploy/${1%.*}.$(sha1sum $1 | cut -d " " -f 1).${1##*.}' bash {} \;
 
 #Replace script in index.html
 start=$(grep -n -m 1 "BEGIN REPLACE WITH DEPLOY VERSION" "index.html" | cut -d: -f1)
