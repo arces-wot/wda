@@ -51,8 +51,8 @@ jsap = {
 			"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
 			"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
 			"sosa": "http://www.w3.org/ns/sosa/",
-			"qudt": "http://qudt.org/schema/qudt/",
-			"unit": "http://qudt.org/vocab/unit/",
+			"qudt": "http://qudt.org/schema/qudt#",
+			"unit": "http://qudt.org/vocab/unit#",
 			"arces-monitor": "http://wot.arces.unibo.it/monitor#",
 			"swamp": "http://swamp-project.org/ns#",
 			"mqtt": "http://wot.arces.unibo.it/mqtt#",
@@ -291,19 +291,19 @@ jsap = {
 				}
 			},
 			"PLACES": {
-				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?place rdf:type schema:Place; schema:name ?name ;  schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long}}"
+				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?place rdf:type schema:Place; schema:name ?name ;  schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long}} ORDER BY DESC(?name)"
 			},
 			"NO_CHILD": {
 				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root rdf:type schema:Place ; schema:name ?name . FILTER NOT EXISTS{?child schema:containedInPlace ?root}}}"
 			},
 			"MAP_PLACES": {
-				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root rdf:type schema:Place; schema:name ?name ;  schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long.  FILTER NOT EXISTS{?root schema:containedInPlace ?place}}}"
+				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root rdf:type schema:Place; schema:name ?name ;  schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long.  FILTER NOT EXISTS{?root schema:containedInPlace ?place}}} ORDER BY DESC(?name)"
 			},
 			"MAP_GROUPS" : {
 				"sparql" : "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root rdf:type schema:Place; rdf:type ?group ; schema:name ?name ;  schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long . ?group rdfs:label ?label   FILTER NOT EXISTS{?root schema:containedInPlace ?place}}}"
 			},
 			"CONTAINED_PLACES": {
-				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root schema:containsPlace ?child . ?child schema:name ?name}}",
+				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root schema:containsPlace ?child . ?child schema:name ?name}} ORDER BY DESC(?name)",
 				"forcedBindings": {
 					"root": {
 						"type": "uri",
@@ -312,16 +312,16 @@ jsap = {
 				}
 			},
 			"ROOT_PLACES": {
-				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root rdf:type schema:Place . ?root schema:name ?name .  FILTER NOT EXISTS{?root schema:containedInPlace ?place} }}"
+				"sparql": "SELECT * WHERE {GRAPH <http://wot.arces.unibo.it/context> {?root rdf:type schema:Place . ?root schema:name ?name .  FILTER NOT EXISTS{?root schema:containedInPlace ?place} }} ORDER BY DESC(?name)"
 			},
 			"OBSERVATIONS": {
-				"sparql": "SELECT * FROM <http://wot.arces.unibo.it/observation/2021> FROM <http://wot.arces.unibo.it/unit> FROM <http://swamp-project.org/observation/cbec> FROM <http://wot.arces.unibo.it/observation> FROM <http://wot.arces.unibo.it/context> WHERE {?observation rdf:type sosa:Observation ; rdfs:label ?label ; sosa:hasResult ?quantity ; sosa:hasFeatureOfInterest ?location . ?location rdf:type schema:Place ; schema:name ?name ; schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long . ?quantity rdf:type qudt:QuantityValue ; qudt:unit ?unit . OPTIONAL {?quantity qudt:numericValue ?value} . OPTIONAL {?observation sosa:resultTime ?timestamp} . ?location schema:name ?name . OPTIONAL{?unit qudt:symbol ?symbol}}"
+				"sparql": "SELECT * FROM <http://wot.arces.unibo.it/observation/2021> FROM <http://qudt.org> FROM <http://swamp-project.org/observation/cbec> FROM <http://wot.arces.unibo.it/observation> FROM <http://wot.arces.unibo.it/context> WHERE {?observation rdf:type sosa:Observation ; rdfs:label ?label ; sosa:hasResult ?quantity ; sosa:hasFeatureOfInterest ?location . ?location rdf:type schema:Place ; schema:name ?name ; schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long . ?quantity rdf:type qudt:QuantityValue ; qudt:unit ?unit . OPTIONAL {?quantity qudt:numericValue ?value} . OPTIONAL {?observation sosa:resultTime ?timestamp} . ?location schema:name ?name . OPTIONAL{?unit <http://qudt.org/schema/qudt/symbol> ?symbol}} ORDER BY ?label"
 			},
 			"OBSERVATIONS_OLD": {
 				"sparql": "SELECT * WHERE {?unit qudt:symbol ?symbol . GRAPH <http://wot.arces.unibo.it/context> {?location rdf:type schema:Place ; schema:name ?name ; schema:GeoCoordinates ?coordinate . ?coordinate schema:latitude ?lat ; schema:longitude ?long}.GRAPH <http://wot.arces.unibo.it/observation> {?observation rdf:type sosa:Observation ; rdfs:label ?label ; sosa:hasResult ?quantity ; sosa:hasFeatureOfInterest ?location . ?quantity rdf:type qudt:QuantityValue ; qudt:unit ?unit . OPTIONAL {?quantity qudt:numericValue ?value} . OPTIONAL {?observation sosa:resultTime ?timestamp}}}"
 			},
 			"OBSERVATIONS_BY_LOCATION": {
-				"sparql": "SELECT * FROM <http://wot.arces.unibo.it/observation/2021> FROM <http://swamp-project.org/observation/cbec> FROM <http://wot.arces.unibo.it/observation> WHERE {?observation sosa:hasFeatureOfInterest ?location ; rdf:type sosa:Observation ; rdfs:label ?label ; sosa:hasResult ?quantity . ?quantity rdf:type qudt:QuantityValue ; qudt:unit ?unit . OPTIONAL {?quantity qudt:numericValue ?value} . OPTIONAL {?observation sosa:resultTime ?timestamp}}",
+				"sparql": "SELECT * FROM <http://wot.arces.unibo.it/observation/2021> FROM <http://swamp-project.org/observation/cbec> FROM <http://wot.arces.unibo.it/observation> WHERE {?observation sosa:hasFeatureOfInterest ?location ; rdf:type sosa:Observation ; rdfs:label ?label ; sosa:hasResult ?quantity . ?quantity rdf:type qudt:QuantityValue ; qudt:unit ?unit . OPTIONAL {?quantity qudt:numericValue ?value} . OPTIONAL {?observation sosa:resultTime ?timestamp}} ORDER BY ?label",
 				"forcedBindings": {
 					"location": {
 						"type": "uri",

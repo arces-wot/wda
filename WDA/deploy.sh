@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $1 || exit
+#cd $1
 
 mkdir -p deploy/js/control
 mkdir -p deploy/js/model
@@ -49,5 +49,3 @@ find deploy/js/control -type f -exec bash -c 'echo "<script src=\"$1\"></script>
 find deploy/js/view -type f -exec bash -c 'echo "<script src=\"$1\"></script>" >> compare-deploy.html' bash {} \;
 
 tail -n +"$stop" compare.html >> compare-deploy.html
-
-docker buildx build --platform linux/amd64 --push -t vaimeedock/wda.vaimee.com:$2 .

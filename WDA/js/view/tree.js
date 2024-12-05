@@ -2,6 +2,8 @@ forecasts = {};
 
 placeNames = {};
 
+showuri = false;
+
 function placeParentsNames(uri) {
 	return placeNames[uri];
 }
@@ -21,7 +23,8 @@ function createObservationsTree(tree, day) {
 
 	$('#tree').empty();
 	$("#tree").append("<div class='nav flex-column nav-pills' id='v-pills-tab' role='tablist' aria-orientation='vertical'/>");
-	$("#v-pills-tab").append("<a class='nav-link' id='" + id + "-tab' data-toggle='pill' href='#" + id + "' role='tab' aria-controls='" + id + "' aria-selected='false'>" + tree["placeName"] + ' '+tree["placeUri"] +"</a>");
+	if (showuri) $("#v-pills-tab").append("<a class='nav-link' id='" + id + "-tab' data-toggle='pill' href='#" + id + "' role='tab' aria-controls='" + id + "' aria-selected='false'>" + tree["placeName"] + ' '+tree["placeUri"] +"</a>");
+	else $("#v-pills-tab").append("<a class='nav-link' id='" + id + "-tab' data-toggle='pill' href='#" + id + "' role='tab' aria-controls='" + id + "' aria-selected='false'>" + tree["placeName"] +"</a>");
 
 	forecasts[id + "-tab"] = {};
 	forecasts[id + "-tab"]["uri"] = tree["placeUri"];
@@ -81,7 +84,9 @@ function createTree(childs, parentId, n, names, day) {
 		childName = child["placeName"];
 		for (i = 0; i < n; i++) { childName = "&nbsp&nbsp&nbsp&nbsp" + childName };
 
-		$("#v-pills-tab").append("<a class='nav-link' id='" + id + "-tab' data-toggle='pill' href='#" + id + "' role='tab' aria-controls='" + id + "' aria-selected='false'>" + childName + ' ' + child["placeUri"] + "</a>");
+		if (showuri) $("#v-pills-tab").append("<a class='nav-link' id='" + id + "-tab' data-toggle='pill' href='#" + id + "' role='tab' aria-controls='" + id + "' aria-selected='false'>" + childName + ' ' + child["placeUri"] + "</a>");
+		else $("#v-pills-tab").append("<a class='nav-link' id='" + id + "-tab' data-toggle='pill' href='#" + id + "' role='tab' aria-controls='" + id + "' aria-selected='false'>" + childName + "</a>");
+		
 		$("#" + id + "-tab").insertAfter("#" + parentId);
 
 		$('#' + id + '-tab').on('show.bs.tab', function(e) {

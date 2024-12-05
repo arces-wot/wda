@@ -1,5 +1,8 @@
-
 sensorData = {};
+
+enableCompare = false;
+
+showForecast = false;
 
 notifications = [ {
 	"title" : "Notifications",
@@ -22,9 +25,7 @@ function onObservation(binding) {
 	let observation = binding.observation.value;
 	
 	let value = binding.value ? binding.value.value : "???";
-	
-	//console.log("onObservation Place:"+place+" Observation:"+observation+" value:"+value)
-	
+		
 	if (binding.timestamp != undefined) {
 		timestamp = binding.timestamp.value;
 	} else {
@@ -71,21 +72,13 @@ function onObservation(binding) {
 }
 
 function addPlace(place_id) {
-//	var today = new Date();
-//	var tomorrow = new Date();
-//	var dat = new Date();
-//	
-//	tomorrow.setDate(tomorrow.getDate() + 1);
-//	dat.setDate(dat.getDate() + 2);
-
 	$("#graph")
 			.append(
 					"<div class='tab-pane fade' id='"+ place_id + "' role='tabpanel' aria-labelledby='"+ place_id+ "-tab'>"
-					+ "<div id='live_"+ place_id+ "'></div>"
-					+ "<div class='container flex-row-reverse' id='forecast_"+ place_id+ "-tab'></div>"
-					+ "</div>");
+					+ "<div id='live_"+ place_id+ "'></div>");
+	if (showForecast) $("#graph"). append("<div class='container flex-row-reverse' id='forecast_"+ place_id+ "-tab'></div>") 
+	$("#graph").append("</div>")
 
-//	$("#forecast_" + place_id+"-tab").hide();
 }
 
 function addObservation(observation, place) {
@@ -117,7 +110,8 @@ function addObservation(observation, place) {
 		+ "<button class='btn btn-primary float-right' type='submit'><small><i class='fas fa-external-link-alt'></i>&nbsp;History</small></button>"
 	+ "</form></div>"
 	
-	+ "<div class='col-auto'>"
+	if (enableCompare) {
+	layout = layout + "<div class='col-auto'>"
 	+ "<form target='_blank' action='./compare.html'>"
 		+ "<input class='form-control form-control-sm' type='hidden' name='observation' value=\""+ observation+ "\" />"
 		+ "<input class='form-control form-control-sm' type='hidden' name='placeUri' value=\"" + place + "\" />"
@@ -128,8 +122,9 @@ function addObservation(observation, place) {
 		+ "<input placeId='"+placeIds[place]+"' class='form-control form-control-sm' type='hidden' name='placeName' value='???' />"
 		+ "<button class='btn btn-primary float-right' type='submit'><small><i class='fas fa-external-link-alt'></i>&nbsp;Compare</small></button>"
 	+ "</form></div>"
+	}
 	
-	+ "</div></div>"
+	layout = layout + "</div></div>"
 	
 	$("#live_" + sensorData[place]["div_id"]).append(layout);	
 }

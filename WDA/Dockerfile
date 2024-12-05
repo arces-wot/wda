@@ -1,9 +1,9 @@
 # Build command on Apple M1: docker buildx build --platform linux/amd64 --push -t vaimeedock/wda.vaimee.com:latest .
-FROM nginx
+FROM nginx:alpine
 
 COPY / /usr/share/nginx/html
 
-#RUN apk update && apk upgrade && apk add bash
+RUN apk update && apk upgrade && apk add bash
 
 WORKDIR /usr/share/nginx/html
 
